@@ -20,9 +20,8 @@ export class NewInterview extends Component {
         return (
             <div>
                 <h2>Create new Interview</h2>
-                <InterviewForm Interview = {this.state.interview}
-                    addInterview = {this.addInterview}
-                    id = {this.props.match.params.id}
+                <InterviewForm addInterview = {this.addInterview}
+                    id = {this.state.id}
                 />
             </div>
         )

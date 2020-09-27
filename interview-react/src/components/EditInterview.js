@@ -8,7 +8,7 @@ export class EditInterview extends Component {
         id: ""
     }
     addInterview = (temp) => {
-        axios.patch('http://localhost:3000/interviews', {
+        axios.patch('http://localhost:3000/interviews/'+ this.props.match.params.id, {
             id1: temp.id1,
             id2: temp.id2,
             st_time: temp.st_time,

@@ -3,26 +3,25 @@ import ParticipantForm from './ParticipantForm.js'
 import axios from 'axios';
 
 
-export class EditParticipant extends Component {
+export class NewParticipant extends Component {
     state = {
-        id: ""
+        id: "-1"
     }
     addParticipant = (temp) => {
         let formData = temp
-        axios.patch('http://localhost:3000/participants/'+  this.props.match.params.id , formData)
+        axios.post('http://localhost:3000/participants',  formData)
         .then(console.log("done"))
     }
     render() {
         return (
             <div>
-                <h2> Edit Participant </h2>
-                <ParticipantForm 
+                <h2>Create new Participant </h2>
+                <ParticipantForm id = {this.state.id}
                     addParticipant = {this.addParticipant}
-                    id = {this.props.match.params.id}
                 />
             </div>
         )
     }
 }
 
-export default EditParticipant
+export default NewParticipant

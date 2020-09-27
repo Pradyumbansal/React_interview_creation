@@ -20,13 +20,13 @@ export class InterviewForm extends Component {
             res.data.map((cur) =>  {
                 if(cur.participanttype === 'Interviewee') {
                     temp1.push({
-                        "id": cur.id,
+                        "value": cur.id,
                         "label": cur.name
                     })
                 }
                 else {
                     temp2.push({
-                        "id": cur.id,
+                        "value": cur.id,
                         "label": cur.name
                     })
                     }
@@ -36,7 +36,7 @@ export class InterviewForm extends Component {
             this.setState({Interviewer: temp2})
             this.setState({id1: this.state.Interviewee[0]["id"]})
             this.setState({id2: this.state.Interviewer[0]["id"]})
-            if (this.props.id !== -1) {
+            if (this.props.id !== "-1") {
                 axios.get('http://localhost:3000/interviews/'+ this.state.id)
                 .then(res => {
                    this.setState({id1: res.data.id1})
@@ -57,6 +57,7 @@ export class InterviewForm extends Component {
             "st_time": this.state.st_time,
             "en_time": this.state.en_time,
         }  
+        console.log(this.state);
         this.props.addInterview(temp);
     }
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -68,7 +69,7 @@ export class InterviewForm extends Component {
                         <input
                             type = "datetime-local"
                             name = "st_time"
-                            value = {this.st_time}
+                            value = {this.state.st_time}
                             onChange = {this.onChange}
                         />
                     </label>
@@ -76,16 +77,20 @@ export class InterviewForm extends Component {
                         <input
                             type = "datetime-local"
                             name = "en_time"
-                            value = {this.en_time}
+                            value = {this.state.en_time}
                             onChange = {this.onChange}
                         />
                     </label>
                     <label>
                         Choose Interviewee:
-                        <select value={this.state.id1} onChange={this.onChange}>
+                        <select value={this.state.id1} onChange={(e) => {
+                            this.setState({id1: e.target.value}, () => {
+                                console.log(this.state.id1);
+                            })
+                        }}>
                             {
                                 this.state.Interviewee.map((option) =>
-                                    <option key = {option.id} value = {option.id}> {option.label} </option>
+                                    <option key = {option.value} value = {option.value}> {option.label} </option>
                                 
                                 )
                             }
@@ -93,10 +98,14 @@ export class InterviewForm extends Component {
                     </label>
                     <label>
                         Choose Interviewer:
-                        <select value={this.state.id1} onChange={this.onChange}>
+                        <select value={this.state.id2} onChange={(e) => {
+                            this.setState({id2: e.target.value}, () => {
+                                console.log(this.state.id2);
+                            })
+                        }}>
                             {
                                 this.state.Interviewer.map((option) =>
-                                    <option key = {option.id} value = {option.id}> {option.label} </option>
+                                    <option key = {option.value} value = {option.value}> {option.label} </option>
                                 
                                 )
                             }
@@ -105,8 +114,10 @@ export class InterviewForm extends Component {
                     <input
                         type = "button"
                         name = "Submit"
+                        value = "submit"
                         onClick = {this.onSubmit}
-                    />
+                        
+                    /> 
                 </form>
             </div>
         )
