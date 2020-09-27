@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import InterviewForm from './InterviewForm.js'
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 
 export class EditInterview extends Component {
     state = {
-        id: ""
+        id: "",
+        isadded: false
     }
     addInterview = (temp) => {
         axios.patch('http://localhost:3000/interviews/'+ this.props.match.params.id, {
@@ -14,9 +16,14 @@ export class EditInterview extends Component {
             st_time: temp.st_time,
             en_time: temp.en_time
         })
-        .then(console.log("done"))
+        .then(res => {
+            this.setState({isadded: true})
+        })
     }
     render() {
+        if (this.state.isadded === true) {
+            return <Redirect to = "/"></Redirect>
+        }
         return (
             <div>
                 <h2>Create new Interview</h2>

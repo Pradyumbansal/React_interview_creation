@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+
 export class InterviewForm extends Component {
     state = {
+            
             st_time: "",
             en_time: "",
             id1: "",
@@ -47,9 +49,13 @@ export class InterviewForm extends Component {
                 })
                 console.log("hererer")
             }
+            else {
+                this.setState({id2: document.getElementById('id2').value, id1: document.getElementById('id1').value});
+            }
             return res;
         });
     }
+
     onSubmit = (e) => {
         let temp = {
             "id1": this.state.id1,
@@ -83,7 +89,7 @@ export class InterviewForm extends Component {
                     </label>
                     <label>
                         Choose Interviewee:
-                        <select value={this.state.id1} onChange={(e) => {
+                        <select id = "id1" value={this.state.id1} onChange={(e) => {
                             this.setState({id1: e.target.value}, () => {
                                 console.log(this.state.id1);
                             })
@@ -98,7 +104,7 @@ export class InterviewForm extends Component {
                     </label>
                     <label>
                         Choose Interviewer:
-                        <select value={this.state.id2} onChange={(e) => {
+                        <select id = "id2" value={this.state.id2} onChange={(e) => {
                             this.setState({id2: e.target.value}, () => {
                                 console.log(this.state.id2);
                             })
